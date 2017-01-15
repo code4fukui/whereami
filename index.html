@@ -1,0 +1,100 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'/>
+<title>whereami</title>
+<meta property="og:image" content="whereami.png">
+<link rel="apple-touch-icon" href="whereami.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<script src="fukuno.js"></script>
+<script>"use strict";
+var DEFAULT_POS = { lat: 35.9433, lng: 136.1885 }; // default Sabae st.
+
+window.onload = function() {
+	get("link").textContent = "getting your location...";
+	navigator.geolocation.getCurrentPosition(function(pos) {
+		show({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+	}, function(err) {	// err
+		console.log("GPS err: " + err.message);
+		show(DEFAULT_POS);
+	});
+};
+var show = function(pos) {
+	var url = document.location.hash;
+	if (url.length > 1) {
+		url = url.substring(1);
+	} else {
+		url = "https://maps.google.com/?ll=";
+	}
+	get("link").textContent = "post your location to '" + url + "'";
+	get("link").href = url + pos.lat + "," + pos.lng;
+	get("link").style.backgroundColor = "#383";
+};
+</script>
+<style>
+body {
+	margin: 0px;
+	text-align: center;
+	word-break: break-all;
+	background: #eee;
+}
+#link {
+	font-size: 150%;
+	color: #fff !important;
+	background-color: #aaa;
+	margin: 4em 0em 2em 0em;
+	width: 50%;
+	padding: 1.2em 1em;
+	line-height: 1.2;
+}
+.button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.5);
+	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.5);
+	box-shadow: 0 1px 4px rgba(0,0,0,.5);
+}
+.button:hover {
+	text-decoration: none;
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}
+.src a {
+	color: black !important;
+}
+.src {
+	margin: 10px;
+	font-size: 80%;
+}
+h3 {
+	font-size: 110%;
+}
+.desc {
+	margin-bottom: 1em;
+}
+</style>
+</head>
+<body>
+
+<a class=button id=link>where am I?</a>
+
+
+<div class="src">
+<br>
+<h3>whereami</h3>
+<div class="desc">
+* You can get user's position by setting your URL as hash.<br>
+ex) <a href=https://codeforfukui.github.io/whereami/#https://howml.github.io/akijikan/#>https://codeforfukui.github.io/whereami/#https://howml.github.io/akijikan/#</a>
+</div>
+APP: <a href=https://creativecommons.org/licenses/by/4.0/ target=_blank>CC BY</a> <a href=http://fukuno.jig.jp/1637 target=_blank>Create Every Day</a><br>
+</div>
+
+</body>
+</html>
