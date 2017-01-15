@@ -38,7 +38,7 @@ window.onload = function() {
 var show = function(pos) {
 	var url = document.location.hash;
 	if (url.length > 1) {
-		url = url.substring(1);
+		url = decodeURL(url.substring(1));
 	} else {
 		url = "https://maps.google.com/?ll=";
 	}
