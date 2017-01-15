@@ -13,7 +13,11 @@ window.onload = function() {
 		show({ lat: pos.coords.latitude, lng: pos.coords.longitude });
 	}, function(err) {	// err
 		console.log("GPS err: " + err.message);
-		show(DEFAULT_POS);
+		if (confirm("GPSエラー（" + err .message + "）\nテストとして鯖江駅の位置情報を使います")) {
+			show(DEFAULT_POS);
+		} else {
+			alert("設定を見直し、必要であれば再読み込みしてください");
+		}
 	});
 };
 var show = function(pos) {
