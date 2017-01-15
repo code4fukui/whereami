@@ -7,16 +7,31 @@
 <script>"use strict";
 var DEFAULT_POS = { lat: 35.9433, lng: 136.1885 }; // default Sabae st.
 
+var text = function(ss) {
+	var lang = getLanguage();
+//	lang = "ja";
+	var s = ss[lang];
+	if (s)
+		 return s;
+	s = ss["en"];
+	if (s)
+		 return s;
+	for (var n in ss) {
+		return ss[n];
+	}
+};
+
 window.onload = function() {
-	get("link").textContent = "getting your location...";
+	get("link").textContent = text({ en:"getting your location...", ja:"位置情報を取得中です..."});
 	navigator.geolocation.getCurrentPosition(function(pos) {
 		show({ lat: pos.coords.latitude, lng: pos.coords.longitude });
 	}, function(err) {	// err
 		console.log("GPS err: " + err.message);
-		if (confirm("GPSエラー（" + err .message + "）\nテストとして鯖江駅の位置情報を使います")) {
+		if (confirm("GPS" + text({ en: "err", ja: "エラー"}) +
+				 " (" + err .message + "）\n" + text({ en: "using Sabae st's location as a test", ja: "テストとして鯖江駅の位置情報を使います"}))) {
 			show(DEFAULT_POS);
 		} else {
-			alert("設定を見直し、必要であれば再読み込みしてください");
+			alert(text({ en: "check the location privacy setting and reload", ja: "位置情報のプライバシー設定を見直し、再読み込みしてください" }));
 		}
 	});
 };
@@ -27,7 +42,7 @@ var show = function(pos) {
 	} else {
 		url = "https://maps.google.com/?ll=";
 	}
-	get("link").textContent = "post your location to '" + url + "'";
+	get("link").textContent = text({ en: "post your location to '" + url + "'", ja: "'" + url + "'へあなたの位置情報を送ります" });
 	get("link").href = url + pos.lat + "," + pos.lng;
 	get("link").style.backgroundColor = "#383";
 };
