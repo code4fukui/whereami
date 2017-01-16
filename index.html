@@ -33,6 +33,7 @@ window.onload = function() {
 		} else {
 			alert(text({ en: "check the location privacy setting and reload", ja: "位置情報のプライバシー設定を見直し、再読み込みしてください" }));
 		}
+		get("link").textContent = text({ en:"couldn't get your location", ja:"位置情報を取得できませんでした"});
 	});
 };
 var show = function(pos) {
